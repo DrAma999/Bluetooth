@@ -1,33 +1,33 @@
 // swift-tools-version:5.3
 import PackageDescription
 
-#if os(Linux)
-let libraryType: PackageDescription.Product.Library.LibraryType = .dynamic
-#else
-let libraryType: PackageDescription.Product.Library.LibraryType = .static
-#endif
+//#if os(Linux)
+//let libraryType: PackageDescription.Product.Library.LibraryType = .dynamic
+//#else
+//let libraryType: PackageDescription.Product.Library.LibraryType = .static
+//#endif
 
 let package = Package(
     name: "Bluetooth",
     products: [
         .library(
             name: "Bluetooth",
-            type: libraryType,
+            type: .static,
             targets: ["Bluetooth"]
         ),
         .library(
             name: "BluetoothGAP",
-            type: libraryType,
+            type: .static,
             targets: ["BluetoothGAP"]
         ),
         .library(
             name: "BluetoothGATT",
-            type: libraryType,
+            type: .static,
             targets: ["BluetoothGATT"]
         ),
         .library(
             name: "BluetoothHCI",
-            type: libraryType,
+            type: .static,
             targets: ["BluetoothHCI"]
         )
     ],
