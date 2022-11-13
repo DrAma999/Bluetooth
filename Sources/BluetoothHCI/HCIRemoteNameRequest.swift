@@ -19,16 +19,17 @@ public extension BluetoothHostControllerInterface {
     /// When the Remote Supported Host Features Notification event is unmasked and when the Remote_Name_Request command initiates a connection, the Link Manager shall read the remote LMP features mask pages 0 and 1.
     ///
     /// -  Note: If no connection exists between the local device and the device corresponding to the BD_ADDR, a temporary link layer connection will be estab- lished to obtain the LMP features and name of the remote device.
+    @discardableResult
     func remoteNameRequest(address: BluetoothAddress,
                            pscanRepMode: PageScanRepetitionMode,
                            clockOffset: HCIRemoteNameRequest.ClockOffset,
-                           timeout: HCICommandTimeout = .default) throws -> HCIRemoteNameRequestComplete {
+                           timeout: HCICommandTimeout = .default) async throws -> HCIRemoteNameRequestComplete {
         
         let remoteNameRequest = HCIRemoteNameRequest(address: address,
                                                      pscanRepMode: pscanRepMode,
                                                      clockOffset: clockOffset)
         
-        return try deviceRequest(remoteNameRequest, HCIRemoteNameRequestComplete.self, timeout: timeout)
+        return try await deviceRequest(remoteNameRequest, HCIRemoteNameRequestComplete.self, timeout: timeout)
     }
 }
 

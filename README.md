@@ -5,10 +5,6 @@
 [![Release][release-badge]][release-url]
 [![License][mit-badge]][mit-url]
 
-[![Build Status][build-status-badge]][build-status-url]
-[![CodeBeat][codebeat-badge]][codebeat-url]
-[![Docs][docs-badge]][docs-url]
-
 Pure Swift Bluetooth Definitions.
 
 
@@ -50,19 +46,14 @@ let package = Package(
 
 ## Documentation
 
-Read the documentation [here](http://pureswift.github.io/Bluetooth/docs/).
-Documentation can be generated with [Jazzy](https://github.com/realm/jazzy).
-For more information, see the [gh-pages](https://github.com/PureSwift/Bluetooth/tree/gh-pages) branch.
+Read the documentation [here](http://pureswift.github.io/Bluetooth/documentation/bluetooth/).
+Documentation can be generated with [DocC](https://github.com/apple/swift-docc).
 
 ## See Also
 
 - [BluetoothLinux](https://github.com/PureSwift/BluetoothLinux) - Pure Swift Linux Bluetooth Stack
-- [BluetoothDarwin](https://github.com/PureSwift/BluetoothDarwin) - Low Level Swift Bluetooth library for the Darwin kernel
-- [AndroidBluetooth](https://github.com/PureSwift/AndroidBluetooth) - Swift Bluetooth stack for Android
 - [GATT](https://github.com/PureSwift/GATT) - Bluetooth Generic Attribute Profile (GATT) for Swift
 - [Netlink](https://github.com/PureSwift/Netlink) - Swift library for communicating with Linux Kernel Netlink subsystem (Linux Only) 
-- [DBus](https://github.com/PureSwift/DBus) - Swift library for DBus (Linux Only)
-- [Silica](https://github.com/PureSwift/Silica) - Pure Swift CoreGraphics (Quartz2D) implementation
 - [Predicate](https://github.com/PureSwift/Predicate) - Pure Swift Predicate implementation 
 - [TLVCoding](https://github.com/PureSwift/TLVCoding) - Swift TLV8 (Type-Length-Value) Encoding library
 
@@ -71,7 +62,7 @@ License
 
 **Bluetooth** is released under the MIT license. See LICENSE for details.
 
-[swift-badge]: https://img.shields.io/badge/swift-5.1-F05138.svg "Swift 5.1"
+[swift-badge]: https://img.shields.io/badge/swift-5.6-F05138.svg "Swift 5.6"
 [swift-url]: https://swift.org
 [platform-badge]: https://img.shields.io/badge/platform-macOS%20%7C%20iOS%20%7C%20watchOS%20%7C%20tvOS%20%7C%20Linux%20%7C%20Android-lightgrey.svg
 [platform-url]: https://swift.org
@@ -81,7 +72,4 @@ License
 [build-status-url]: https://github.com/PureSwift/Bluetooth/actions
 [release-badge]: https://img.shields.io/github/release/PureSwift/Bluetooth.svg
 [release-url]: https://github.com/PureSwift/Bluetooth/releases
-[codebeat-badge]: https://codebeat.co/badges/3eaf4fc3-6514-4f2d-83d5-ffd879f319d2
-[codebeat-url]: https://codebeat.co/projects/github-com-pureswift-bluetooth-master
-[docs-badge]: http://pureswift.github.io/Bluetooth/docs/badge.svg
-[docs-url]: http://pureswift.github.io/Bluetooth/docs/
+[docs-url]: http://pureswift.github.io/Bluetooth/documentation/bluetooth/

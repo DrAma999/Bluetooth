@@ -12,7 +12,7 @@ import BluetoothHCI
 
 /// Test Bluetooth Host Controller
 internal final class TestHostController: BluetoothHostControllerInterface {
-    
+        
     /// All controllers on the host.
     static var controllers: [TestHostController] { return [TestHostController()] }
     
@@ -136,45 +136,32 @@ internal final class TestHostController: BluetoothHostControllerInterface {
         return response
     }
     
-    /// Polls and waits for events.
-    func pollEvent <T: HCIEventParameter> (_ eventParameterType: T.Type,
-                                           shouldContinue: () -> (Bool),
-                                           event: (T) throws -> ()) throws {
+    func recieve<Event>(_ eventType: Event.Type) async throws -> Event where Event : HCIEventParameter, Event.HCIEventType == HCIGeneralEvent {
         
-        assert(T.event is HCIGeneralEvent, "Can only parse \(HCIGeneralEvent.self)")
-        
-        let eventCode = T.event
-        
-        while shouldContinue() {
-            
-            guard let message = queue.first
-                else { return } // should be continue but we dont want to wait for tests
-            
-            switch message {
-                
-            case let .event(eventBuffer):
-                
-                queue.removeFirst()
-                
-                let actualBytesRead = eventBuffer.count
-                let eventData = Data(eventBuffer[HCIEventHeader.length ..< actualBytesRead])
-                
-                // filter other events
-                guard let eventDataCodeByte = eventBuffer.first,
-                    eventDataCodeByte == eventCode.rawValue
-                    else { continue }
-                
-                guard let eventParameter = T.init(data: eventData)
-                    else { throw BluetoothHostControllerError.garbageResponse(Data(eventData)) }
-                
-                try event(eventParameter)
-                
-            case .command:
-                
-                // filter commands
-                return // should be continue but we dont want to wait for tests
-            }
+        while queue.isEmpty {
+            try await Task.sleep(nanoseconds: 100_000_000)
         }
+        
+        while let message = queue.popFirst() {
+            guard case let .event(eventBuffer) = message else {
+                continue
+            }
+            let actualBytesRead = eventBuffer.count
+            let eventData = Data(eventBuffer[HCIEventHeader.length ..< actualBytesRead])
+            
+            // filter other events
+            guard let eventDataCodeByte = eventBuffer.first,
+                  eventDataCodeByte == Event.event.rawValue
+                else { continue }
+            
+            guard let eventParameter = Event.init(data: eventData)
+                else { throw BluetoothHostControllerError.garbageResponse(Data(eventData)) }
+            
+            return eventParameter
+        }
+        
+        try await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+        throw CancellationError()
     }
     
     // MARK: - Properties
@@ -360,11 +347,8 @@ internal extension TestHostController {
 extension Array {
     
     mutating func popFirst() -> Element? {
-        
         guard let first = self.first else { return nil }
-        
         self.removeFirst()
-        
         return first
     }
 }
